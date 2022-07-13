@@ -8,7 +8,7 @@ import {Fraction} from 'fractional'
 class RecipeView {
 #parentEl = document.querySelector('.recipe')
 #data
-
+#errorMessage = 'something went wrong with getting your recipe';
 render(data){
     this.#data = data
     this.#clear()
@@ -26,6 +26,21 @@ renderSpiner = function (){
   `
   this.#clear();
   this.#parentEl.insertAdjacentHTML('afterbegin',markup)
+}
+
+renderError (errorMessage = this.#errorMessage){
+
+  const markup = `<div class="error">
+  <div>
+    <svg>
+      <use href="${icons}#icon-alert-triangle"></use>
+    </svg>
+  </div>
+  <p>${errorMessage}</p>
+</div>`
+
+this.#clear();
+this.#parentEl.insertAdjacentHTML('afterbegin',markup)
 }
 
 addHandlerRender(subFunction){

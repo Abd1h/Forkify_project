@@ -8,7 +8,7 @@ export const state = {
 //loading and store recipe data from API
 export const loadRecipe =async function (id){
 try{
-     const recipeObject = await getJSON(`${API_URL}/${id}`); //using helpers function
+     const {recipe :recipeObject }= await getJSON(`${API_URL}/${id}`); //using helpers function
 
       //making new object with js rules source_url --> sourceUrl
       state.recipe ={
@@ -23,7 +23,13 @@ try{
    }
   
 }catch(err){
-    alert(err)
+   throw err
 }
 }
+// ------------------search functionality ---------------------
+export const loadSearchResult = async function (query = 'pizza' ){
 
+const SearchResult = await getJSON (`https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza`)
+
+
+}

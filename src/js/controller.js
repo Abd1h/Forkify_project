@@ -20,17 +20,15 @@ const controlRecipes = async function () {
     if(!id) return //so it dont keep loading when we dont have any hash
 
 //loading recipe with that id
-RecipeView.renderSpiner()
+RecipeView.renderSpiner() // showing a spiner before fetching the data
 await model.loadRecipe(id) // ALLLLLL async funciton will return a promise SOOOO await for it ********* ******* **********
 
-//render the recipe to the 
+//render the recipe to the DOM
+RecipeView.render(model.state.recipe)
 
- RecipeView.render(model.state.recipe)
+}catch (err) {
  
-
-
-    }catch (err) {
-    alert(err);
+    RecipeView.renderError()
   }
 }
 ;

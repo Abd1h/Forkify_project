@@ -14,14 +14,16 @@ export const getJSON = async function (url){
 try{
    //fetching recipe
    const respons = await Promise.race([fetch( url ),timeout(TIME_OUT)]) ; //real life use of race
-   console.log(respons)
+
 
    const data = await respons.json();
+  
   if (!respons.ok)
-     throw new Error(`something went wrong with getting your recipe`);
+     throw new Error(`error`);
 
- return data.data.recipe
+ return data.data
 }catch(err){
-    throw err // doing this to handel the err in the model.js 
+    console.log(err)
+    throw err // doing this to handel the err in the controller
 }
 }

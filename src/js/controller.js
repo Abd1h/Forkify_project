@@ -45,4 +45,4 @@ const init = function(){
   RecipeView.addHandlerRender(controlRecipes)
   }
   init()
-  
+

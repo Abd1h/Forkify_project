@@ -4,15 +4,15 @@ import "regenerator-runtime/runtime";
 //------------------------------------------
 
 import * as model from "./model.js"
-import RecipeView from './Views/recipeView.js';
-
+import recipeView from './Views/recipeView.js';
+import searchView from './Views/searchView.js'
 
 // https://forkify-api.herokuapp.com/v2
 
 ////////////////////////////////////////////////////////
 
 
-//search functionalty
+//// - control rendering recipes functionality
 const controlRecipes = async function () {
   try {
     //getting id from url
@@ -20,20 +20,32 @@ const controlRecipes = async function () {
     if(!id) return //so it dont keep loading when we dont have any hash
 
 //loading recipe with that id
-RecipeView.renderSpiner() // showing a spiner before fetching the data
+recipeView.renderSpiner() // showing a spiner before fetching the data
 await model.loadRecipe(id) // ALLLLLL async funciton will return a promise SOOOO await for it ********* ******* **********
 
 //render the recipe to the DOM
-RecipeView.render(model.state.recipe)
+recipeView.render(model.state.recipe)
 
 }catch (err) {
  
-    RecipeView.renderError()
+    recipeView.renderError()
   }
 }
 ;
 
+//// - control the search functionality
+const controlSearch = async function (){
 
+// 1) geting the query 
+const query =searchView.getQuery();
+if(!query) return;
+// 2) loading search result
+await model.loadSearchResult(query); 
+  
+  }
+  
+console.log('is this working???')
+console.log('yessssssssssssss')
 //////////////event listeners belong to the DOM "views model"
 /////////////implmeanting that using "publisher subscriber pattren"
 
@@ -42,7 +54,9 @@ RecipeView.render(model.state.recipe)
 
 
 const init = function(){
-  RecipeView.addHandlerRender(controlRecipes)
+  recipeView.addHandlerRender(controlRecipes)
+  searchView.addHandlerSearch(controlSearch)
   }
   init()
+
 

@@ -2,7 +2,11 @@ import { getJSON } from "./helpers"
 import { API_URL } from "./config";
 
 export const state = {
-    recipe :{}
+    recipe :{},
+    search: {
+      query: [] // in case we need the info
+      ,results :{}
+    }
 }
 
 //loading and store recipe data from API
@@ -17,7 +21,7 @@ try{
         ingredients : recipeObject.ingredients,
         sourceUrl : recipeObject.source_url,
         title : recipeObject.title,
-        id : recipeObject.id,
+
         publisher: recipeObject.publisher,
         servings : recipeObject.servings
    }
@@ -27,12 +31,23 @@ try{
 }
 }
 // ------------------search functionality ---------------------
-export const loadSearchResult = async function (query = 'pizza' ){
+export const loadSearchResult = async function (query){
 try{
-const SearchResult = await getJSON (`https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza`)
+   state.search.query = query;
+// 1) fetching using helper funciton
+const searchResult = await getJSON (`${API_URL}?search=${query}`)
+// 2) creating new object for our state from the fetched array
+state.search.results = searchResult.recipes.map((recipe)=>{
+   return {
+   img: recipe.image_url,
+   title: recipe.title,
+   id: recipe.id,
+   publisher: recipe.publisher,
+ }})
+
 
 }catch(err){
-   throw err
+  alert(err)
 }
 
 }

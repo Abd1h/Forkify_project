@@ -38,7 +38,7 @@ recipeView.render(model.state.recipe)
 
 //// - control the search functionality
 const controlSearch = async function (){
-
+try{
 // 1) geting the query 
 const query =searchView.getQuery();
 if(!query) return;
@@ -47,15 +47,17 @@ resultView.renderSpiner()
 await model.loadSearchResult(query); 
 // 3) render search result
 
-resultView.render(model.state.search.results)
+resultView.render(model.getResultForPage())
+}catch(err){
+  console.log(err)
+}
   }
-  
-console.log('is this working???')
-console.log('yessssssssssssss')
+
+  //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"
 /////////////implmeanting that using "publisher subscriber pattren"
 
-// //even listen to the change of the url & when the page laod with an recipe
+// listen to the change of the url & when the page laod with a recipe
 // ['hashchange','load'].forEach(ev=>window.addEventListener(ev,fetchRecipe) ) //NEWWWWWWWWWWWWWWW //NEWWWWWWWWWWWWWWW
 
 

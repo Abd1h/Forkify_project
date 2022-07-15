@@ -2,57 +2,18 @@
 // import icons from '../img/icons.svg' //parcel 1 way but in parcel 2 we need one more step for img and voice kinda folders
 import icons from 'url:../../img/icons.svg'
 import {Fraction} from 'fractional'
+import { View } from './View.js'
 
 
-
-class RecipeView {
-#parentEl = document.querySelector('.recipe')
-#data
-#errorMessage = 'something went wrong with getting your recipe';
-render(data){
-    this.#data = data
-    this.#clear()
-    this.#rednerRecipe(this.#data);
-}
-
-renderSpiner = function (){
-
-  const markup =`
-  <div class="spinner">
-          <svg>
-            <use href="${icons}#icon-loader"></use>
-          </svg>
-        </div>
-  `
-  this.#clear();
-  this.#parentEl.insertAdjacentHTML('afterbegin',markup)
-}
-
-renderError (errorMessage = this.#errorMessage){
-
-  const markup = `<div class="error">
-  <div>
-    <svg>
-      <use href="${icons}#icon-alert-triangle"></use>
-    </svg>
-  </div>
-  <p>${errorMessage}</p>
-</div>`
-
-this.#clear();
-this.#parentEl.insertAdjacentHTML('afterbegin',markup)
-}
-
+class RecipeView extends View {
+_parentEl = document.querySelector('.recipe')
+_errorMessage = 'haveing trouble loading your recipe! , please try again'
 addHandlerRender(subFunction){
   ['hashchange','load'].forEach(ev=>window.addEventListener(ev,subFunction) )
 }
 
-#clear(){
- this.#parentEl.innerHTML ='';
-}
 
-
-#rednerRecipe = function(recipeObj){
+_rednerRecipe = function(recipeObj){
 
     const markup = ` 
     <figure class="recipe__fig">
@@ -92,9 +53,7 @@ addHandlerRender(subFunction){
     </div>
     
     <div class="recipe__user-generated">
-      <svg>
-        <use href="${icons}#icon-user"></use>
-      </svg>
+      
     </div>
     <button class="btn--round">
       <svg class="">
@@ -108,7 +67,7 @@ addHandlerRender(subFunction){
     <ul class="recipe__ingredient-list">
     
     <!-- NEW ---------------------- -->
-    ${recipeObj.ingredients.map(ing=>this.#genMarkUpIngeridents(ing)).join('')}
+    ${recipeObj.ingredients.map(ing=>this._genMarkUpIngeridents(ing)).join('')}
     <!-- NEW ----------------------  -->
     
     </ul>
@@ -132,11 +91,11 @@ addHandlerRender(subFunction){
       </svg>
     </a>
     </div> `
-    this.#clear()
-    this.#parentEl.insertAdjacentHTML('afterbegin',markup) 
+    this._clear()
+    this._parentEl.insertAdjacentHTML('afterbegin',markup) 
 }
 
-#genMarkUpIngeridents(ing){
+_genMarkUpIngeridents(ing){
   //using fraction to convert number from 0.5 --> 1/2
     return` <li class="recipe__ingredient">
        <svg class="recipe__icon">

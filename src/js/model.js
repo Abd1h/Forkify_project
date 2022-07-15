@@ -27,15 +27,13 @@ try{
    }
   
 }catch(err){
-   throw err
-}
-}
+   throw err}}
 // ------------------search functionality ---------------------
 export const loadSearchResult = async function (query){
 try{
    state.search.query = query;
 // 1) fetching using helper funciton
-const searchResult = await getJSON (`${API_URL}?search=${query}`)
+const searchResult = await getJSON (`${API_URL}?search=${query}`)  
 // 2) creating new object for our state from the fetched array
 state.search.results = searchResult.recipes.map((recipe)=>{
    return {

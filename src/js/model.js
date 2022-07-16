@@ -5,9 +5,10 @@ export const state = {
     recipe :{},
     search: {
       query: [] // in case we need the info
-      ,results :{}
+      ,results :[]
       ,resultsPerPage : RESULTS_PER_PAGE
       ,currentPage : 1
+      
     }
 }
 
@@ -52,7 +53,8 @@ state.search.results = searchResult.recipes.map((recipe)=>{
 
 // - displaying only 10 results per page "this function gonna be a parameter for "resultView.render"
 export const getResultForPage= function(page = state.search.currentPage){ 
-  state.search.currentPage = page //knowing what page we at 
+  
+state.search.currentPage = page //knowing what page we at 
 
 const start  = (page - 1) * state.search.resultsPerPage
 const end = page * state.search.resultsPerPage

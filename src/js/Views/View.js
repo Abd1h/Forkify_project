@@ -2,8 +2,9 @@ import icons from 'url:../../img/icons.svg'
 
 
 export class View {
-    _data;
+_data;
 _errorMessage = 'something went wrong with getting your recipe';
+
 
     render(data){
       //checking if data is null OR its an array and its empty --> 'no data'
@@ -11,14 +12,15 @@ _errorMessage = 'something went wrong with getting your recipe';
 
       // 1) setting data
         this._data = data
-      // 2) clear html container then render reicpe in it
-        this._clear()
-        this._rednerRecipe(this._data);
+      // 2) clear html container then render in it
+      const markup = this._rednerMarkup(this._data)  
+      this._clear()
+
+      this._parentEl.insertAdjacentHTML('afterbegin',markup)
     }
     
     renderSpiner = function (){
-    
-      const markup =`
+    const markup =`
       <div class="spinner">
               <svg>
                 <use href="${icons}#icon-loader"></use>

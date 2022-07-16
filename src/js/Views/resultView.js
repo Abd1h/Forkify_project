@@ -5,11 +5,11 @@ class ResultView extends View {
 _parentEl = document.querySelector('.search-results')
 
 // - same name as the function in "recipeView" for the parent class "view" render both using the same 'render' function
-_rednerRecipe(results){
+_rednerMarkup(results){
  const markup= results.map(result =>this._genMarkupResult(result)).join('')
 //map will return array of html markups and using join here to join them and make a string
-    this._clear()
-    this._parentEl.insertAdjacentHTML('afterbegin',markup) 
+  
+return markup
 }
 
 // - generate markup in a separate function for aesthetics lol

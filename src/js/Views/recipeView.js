@@ -8,12 +8,13 @@ import { View } from './View.js'
 class RecipeView extends View {
 _parentEl = document.querySelector('.recipe')
 _errorMessage = 'haveing trouble loading your recipe! , please try again'
+
 addHandlerRender(subFunction){
   ['hashchange','load'].forEach(ev=>window.addEventListener(ev,subFunction) )
 }
 
 
-_rednerRecipe = function(recipeObj){
+_rednerMarkup= function(recipeObj){
 
     const markup = ` 
     <figure class="recipe__fig">
@@ -91,8 +92,8 @@ _rednerRecipe = function(recipeObj){
       </svg>
     </a>
     </div> `
-    this._clear()
-    this._parentEl.insertAdjacentHTML('afterbegin',markup) 
+    
+    return markup
 }
 
 _genMarkUpIngeridents(ing){

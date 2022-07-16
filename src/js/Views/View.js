@@ -12,10 +12,10 @@ _errorMessage = 'something went wrong with getting your recipe';
 
       // 1) setting data
         this._data = data
-      // 2) clear html container then render in it
-      const markup = this._rednerMarkup(this._data)  
-      this._clear()
-
+      // 2) getting html markup
+      const markup = this._rednerMarkup(data)  
+      // 3) clear html container then insert markup to the dom
+      this._clear() 
       this._parentEl.insertAdjacentHTML('afterbegin',markup)
     }
     
@@ -27,8 +27,8 @@ _errorMessage = 'something went wrong with getting your recipe';
               </svg>
             </div>
       `
-      this._clear();
-      this._parentEl.insertAdjacentHTML('afterbegin',markup)
+      
+     this._parentEl.insertAdjacentHTML('afterbegin',markup)
     }
     
     renderError (errorMessage = this._errorMessage){

@@ -1,8 +1,9 @@
 import { View } from "./View.js";
 
 class ResultView extends View {
-  _errorMessage = `Couldn't find any result !! please try again`
-_parentEl = document.querySelector('.search-results')
+_errorMessage = `Couldn't find any result !! please try again`
+
+_parentEl = document.querySelector('.results')
 
 // - same name as the function in "recipeView" for the parent class "view" render both using the same 'render' function
 _rednerMarkup(results){

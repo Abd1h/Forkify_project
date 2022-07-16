@@ -1,7 +1,7 @@
 //index.html in dist folder has no acces to your src img folder so we need to import that to show our icons
 // import icons from '../img/icons.svg' //parcel 1 way but in parcel 2 we need one more step for img and voice kinda folders
 import icons from 'url:../../img/icons.svg'
-import {Fraction} from 'fractional'
+// import {Fraction} from 'fractional'
 import { View } from './View.js'
 
 
@@ -102,7 +102,7 @@ _genMarkUpIngeridents(ing){
        <svg class="recipe__icon">
          <use href="${icons}#icon-check"></use>
        </svg>
-       <div class="recipe__quantity">${ing.quantity? new Fraction(ing.quantity).toString():''}</div> 
+       <div class="recipe__quantity">${ing.quantity? ing.quantity:''}</div> 
        <div class="recipe__description">
          <span class="recipe__unit">${ing.unit}</span>
        ${ing.description}

@@ -8,7 +8,7 @@ export const state = {
       ,results :[]
       ,resultsPerPage : RESULTS_PER_PAGE
       ,currentPage : 1
-      
+
     }
 }
 
@@ -60,5 +60,6 @@ const start  = (page - 1) * state.search.resultsPerPage
 const end = page * state.search.resultsPerPage
 
 return state.search.results.slice(start,end)
+
 }
 

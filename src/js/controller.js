@@ -2,7 +2,7 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 //------------------------------------------
-
+console.log('for ggggreerrrrrreel')
 import * as model from "./model.js"
 import recipeView from './Views/recipeView.js';
 import searchView from './Views/searchView.js'
@@ -46,12 +46,23 @@ if(!query) return;
 resultView.renderSpiner()
 await model.loadSearchResult(query); 
 // 3) render search result
-resultView.render(model.getResultForPage(1)) 
+model.getResultForPage()
+
+resultView.render(model.getResultForPage())
+
 paginationView.render(model.state.search) // rendering paginate
+
+
+
 }catch(err){
   console.log(err)
 }
-  }
+ }
+
+// const controlPaginate = function(){
+// paginationView.render(model.state.search) // rendering paginate
+
+// }
 
   //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"

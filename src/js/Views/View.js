@@ -27,7 +27,7 @@ _errorMessage = 'something went wrong with getting your recipe';
               </svg>
             </div>
       `
-      
+      this._clear()
      this._parentEl.insertAdjacentHTML('afterbegin',markup)
     }
     

@@ -59,11 +59,14 @@ paginationView.render(model.state.search) // rendering paginate
 }
  }
 
-// const controlPaginate = function(){
-// paginationView.render(model.state.search) // rendering paginate
+const controlPaginate = function(goToPage){
 
-// }
+  resultView.render(model.getResultForPage(goToPage))
+paginationView.render(model.state.search) //  rendering NEW paginate
 
+
+}
+console.log('hellow')
   //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"
 /////////////implmeanting that using "publisher subscriber pattren"
@@ -75,6 +78,7 @@ paginationView.render(model.state.search) // rendering paginate
 const init = function(){
   recipeView.addHandlerRender(controlRecipes)
   searchView.addHandlerSearch(controlSearch)
+  paginationView._addHandlerClick(controlPaginate)
   }
   init()
 

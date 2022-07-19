@@ -59,12 +59,11 @@ paginationView.render(model.state.search) // rendering paginate
 }
  }
 
+// - control pagination functionalty 
 const controlPaginate = function(goToPage){
 
-  resultView.render(model.getResultForPage(goToPage))
+resultView.render(model.getResultForPage(goToPage)) // new page results
 paginationView.render(model.state.search) //  rendering NEW paginate
-
-
 }
 console.log('hellow')
   //SIDE NOTES//
@@ -74,7 +73,7 @@ console.log('hellow')
 // listen to the change of the url & when the page laod with a recipe
 // ['hashchange','load'].forEach(ev=>window.addEventListener(ev,fetchRecipe) ) //NEWWWWWWWWWWWWWWW //NEWWWWWWWWWWWWWWW
 
-
+// init fucntion that will fire event Listeners from the Views
 const init = function(){
   recipeView.addHandlerRender(controlRecipes)
   searchView.addHandlerSearch(controlSearch)

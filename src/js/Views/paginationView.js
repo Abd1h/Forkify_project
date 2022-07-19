@@ -50,6 +50,7 @@ this._parentEl.addEventListener('click',function(e){
  const target = e.target.closest(".btn--inline")  
   if(!target) return
   const goToPage = +target.dataset.goto
+  
   handler(goToPage)
 })
 

@@ -12,17 +12,19 @@ _errorMessage = 'haveing trouble loading your recipe! , please try again'
 addHandlerRender(handler){
   ['hashchange','load'].forEach(ev=>window.addEventListener(ev,handler) )
 }
-
 addHandlerServings(handler){
 this._parentEl.addEventListener('click',function(e){
-const btn = e.target.closest('.btn--tiny')
+
+const btn = e.target.closest('.btn--update-servings')
 if(!btn) return
-const servingsNum = +btn.dataset.servingsNum
-console.log(btn ,servingsNum)
-  handler(servingsNum)
+const servingsNum = +btn.dataset.value
+
+if(servingsNum > 0) handler(servingsNum) //cant have servings in negative
+
 })
 
 }
+
 
 _rednerMarkup= function(recipeObj){
 
@@ -50,12 +52,12 @@ _rednerMarkup= function(recipeObj){
       <span class="recipe__info-text">servings</span>
     
       <div class="recipe__info-buttons">
-        <button class="btn--tiny  btn--increase-servings data-servings-num = "${recipeObj.servings -1}">
+        <button class="btn--tiny  btn--update-servings" data-value="${recipeObj.servings - 1}">
           <svg>
             <use href="${icons}#icon-minus-circle"></use>
           </svg>
         </button>
-        <button class="btn--tiny btn--increase-servings data-servings-num = "${recipeObj.servings + 1}">
+        <button class="btn--tiny btn--update-servings" data-value="${recipeObj.servings + 1}">
           <svg>
             <use href="${icons}#icon-plus-circle"></use>
           </svg>
@@ -105,6 +107,8 @@ _rednerMarkup= function(recipeObj){
     
     return markup
 }
+ 
+
 
 _genMarkUpIngeridents(ing){
   //using fraction to convert number from 0.5 --> 1/2

@@ -9,10 +9,20 @@ class RecipeView extends View {
 _parentEl = document.querySelector('.recipe')
 _errorMessage = 'haveing trouble loading your recipe! , please try again'
 
-addHandlerRender(subFunction){
-  ['hashchange','load'].forEach(ev=>window.addEventListener(ev,subFunction) )
+addHandlerRender(handler){
+  ['hashchange','load'].forEach(ev=>window.addEventListener(ev,handler) )
 }
 
+addHandlerServings(handler){
+this._parentEl.addEventListener('click',function(e){
+const btn = e.target.closest('.btn--tiny')
+if(!btn) return
+const servingsNum = +btn.dataset.servingsNum
+console.log(btn ,servingsNum)
+  handler(servingsNum)
+})
+
+}
 
 _rednerMarkup= function(recipeObj){
 
@@ -40,12 +50,12 @@ _rednerMarkup= function(recipeObj){
       <span class="recipe__info-text">servings</span>
     
       <div class="recipe__info-buttons">
-        <button class="btn--tiny btn--increase-servings">
+        <button class="btn--tiny  btn--increase-servings data-servings-num = "${recipeObj.servings -1}">
           <svg>
             <use href="${icons}#icon-minus-circle"></use>
           </svg>
         </button>
-        <button class="btn--tiny btn--increase-servings">
+        <button class="btn--tiny btn--increase-servings data-servings-num = "${recipeObj.servings + 1}">
           <svg>
             <use href="${icons}#icon-plus-circle"></use>
           </svg>

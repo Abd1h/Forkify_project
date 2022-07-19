@@ -2,7 +2,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 //------------------------------------------
-console.log('for ggggreerrrrrreel')
 import * as model from "./model.js"
 import recipeView from './Views/recipeView.js';
 import searchView from './Views/searchView.js'
@@ -65,7 +64,14 @@ const controlPaginate = function(goToPage){
 resultView.render(model.getResultForPage(goToPage)) // new page results
 paginationView.render(model.state.search) //  rendering NEW paginate
 }
-console.log('hellow')
+
+
+// - contorl serveings
+const controlServings =function(numOfServings){
+
+model.updateServings(numOfServings)
+recipeView.render(model.state.recipe)
+}
   //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"
 /////////////implmeanting that using "publisher subscriber pattren"
@@ -76,6 +82,7 @@ console.log('hellow')
 // init fucntion that will fire event Listeners from the Views
 const init = function(){
   recipeView.addHandlerRender(controlRecipes)
+  recipeView.addHandlerServings(controlServings)
   searchView.addHandlerSearch(controlSearch)
   paginationView._addHandlerClick(controlPaginate)
   }

@@ -28,7 +28,9 @@ try{
         publisher: recipeObject.publisher,
         servings : recipeObject.servings
    }
+  //
   
+
 }catch(err){
    throw err}}
 // ------------------search functionality ---------------------
@@ -46,7 +48,6 @@ state.search.results = searchResult.recipes.map((recipe)=>{
    publisher: recipe.publisher,
  }})
 
-
 }catch(err){
   throw err
 }}
@@ -58,8 +59,19 @@ state.search.currentPage = page //knowing what page we at
 
 const start  = (page - 1) * state.search.resultsPerPage
 const end = page * state.search.resultsPerPage
-
 return state.search.results.slice(start,end)
 
 }
 
+// - change serverings for recipe
+export const updateServings = function (newServings){
+  const {ingredients} = state.recipe
+  
+  // formula for increasing the quantity --> NewServings * quantity / old servings
+  ingredients.forEach((ing)=>{
+    ing.quantity = newServings * ing.quantity / state.recipe.servings
+   })
+  // updating the servings in the state object
+state.recipe.servings = newServings
+
+}

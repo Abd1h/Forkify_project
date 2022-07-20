@@ -70,7 +70,7 @@ paginationView.render(model.state.search) //  rendering NEW paginate
 const controlServings =function(numOfServings){
 
 model.updateServings(numOfServings)
-recipeView.render(model.state.recipe)
+
 }
   //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"

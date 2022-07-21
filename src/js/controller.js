@@ -47,8 +47,7 @@ await model.loadSearchResult(query);
 // 3) render search result
 model.getResultForPage()
 
-resultView.render(model.getResultForPage())
-
+resultView.render(model.getResultForPage(1)) // passing 1 so it always starts with page 1 even if the prev recpie was on page 5..
 paginationView.render(model.state.search) // rendering paginate
 
 
@@ -68,9 +67,8 @@ paginationView.render(model.state.search) //  rendering NEW paginate
 
 // - contorl serveings
 const controlServings =function(numOfServings){
-
 model.updateServings(numOfServings)
-
+recipeView.update(model.state.recipe)
 }
   //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"

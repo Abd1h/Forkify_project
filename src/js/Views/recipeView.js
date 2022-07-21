@@ -12,6 +12,7 @@ _errorMessage = 'haveing trouble loading your recipe! , please try again'
 addHandlerRender(handler){
   ['hashchange','load'].forEach(ev=>window.addEventListener(ev,handler) )
 }
+
 addHandlerServings(handler){
 this._parentEl.addEventListener('click',function(e){
 

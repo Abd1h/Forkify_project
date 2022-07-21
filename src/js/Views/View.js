@@ -19,6 +19,34 @@ _errorMessage = 'something went wrong with getting your recipe';
       this._parentEl.insertAdjacentHTML('afterbegin',markup)
     }
     
+    //small allgorithm to updata a part of the dom and not rerender the whole thing
+    update(data){
+      if (!data || (Array.isArray(data) && data.length === 0) ) return  this.renderError() //this function will work cuz its in the same line **********
+      // 1) setting data with the new updated version
+      this._data = data
+      // 2) creating the new markup
+      const newMarkup = this._rednerMarkup(data)  
+      // 3) the two steps below is to get a [nodelist] out of the markup 'dom content'
+      const newDom = document.createRange().createContextualFragment(newMarkup) // ********* ********* *********
+      const newEl = Array.from( newDom.querySelectorAll('*'))// ********* ********* *********
+     // 4) getting [nodelist] out of the current displayed markup 'dom content'
+      const curEl = Array.from( this._parentEl.querySelectorAll('*'))
+     //NNNOTESSS: 
+     // curEL = the current HTML content in the dom , newEl = same HTML content with new updates or changes like "people serving number"
+     // converting nodelist to array so we could loop over them and comper the curEl with newEl using *********el.isEqualNode(seond el)********
+     // 
+     
+      newEl.forEach((newEl, i) => {
+ // goal: change sigle parts of the current element only if its different from the New element
+  // we went to check for differences in the TextContent of the dom el, and note for difference between its parants 
+ // newEl.firstChild.nodeValue this will return the value of the chenged
+ if (!curEl[i].isEqualNode(newEl) && newEl.firstChild.nodeValue !== '')
+        console.log(newEl.firstChild.nodeValue)
+      });
+    }
+
+
+
     renderSpiner = function (){
     const markup =`
       <div class="spinner">

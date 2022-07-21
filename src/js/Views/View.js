@@ -28,20 +28,32 @@ _errorMessage = 'something went wrong with getting your recipe';
       const newMarkup = this._rednerMarkup(data)  
       // 3) the two steps below is to get a [nodelist] out of the markup 'dom content'
       const newDom = document.createRange().createContextualFragment(newMarkup) // ********* ********* *********
-      const newEl = Array.from( newDom.querySelectorAll('*'))// ********* ********* *********
+      const newElement = Array.from( newDom.querySelectorAll('*'))// ********* ********* *********
      // 4) getting [nodelist] out of the current displayed markup 'dom content'
-      const curEl = Array.from( this._parentEl.querySelectorAll('*'))
+      const curElement = Array.from( this._parentEl.querySelectorAll('*'))
      //NNNOTESSS: 
      // curEL = the current HTML content in the dom , newEl = same HTML content with new updates or changes like "people serving number"
      // converting nodelist to array so we could loop over them and comper the curEl with newEl using *********el.isEqualNode(seond el)********
      // 
      
-      newEl.forEach((newEl, i) => {
+      newElement.forEach((newEl, i) => {
+        const curEl = curElement[i]
  // goal: change sigle parts of the current element only if its different from the New element
-  // we went to check for differences in the TextContent of the dom el, and note for difference between its parants 
- // newEl.firstChild.nodeValue this will return the value of the chenged
- if (!curEl[i].isEqualNode(newEl) && newEl.firstChild.nodeValue !== '')
-        console.log(newEl.firstChild.nodeValue)
+// we went to check for differences in the TextContent of the dom el, and note for difference between its parants 
+ // newEl.firstChild  will return the actual text that we want to comper
+
+ //1) changing Text content
+ if (!curEl.isEqualNode(newEl) && newEl.firstChild?.nodeValue.trim() !== '') //using trim cuz spaces fuck thing up
+ curEl.textContent = newEl.textContent  
+//1) changing attributes so data-value reset to the new value
+
+if (!curEl.isEqualNode(newEl)){ 
+const arttributesOfNewEl = Array.from(newEl.attributes)
+
+arttributesOfNewEl.forEach(arrt =>{
+  curEl.setAttribute(arrt.name , arrt.value)
+})
+}
       });
     }
 

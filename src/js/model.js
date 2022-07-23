@@ -89,7 +89,9 @@ export const addBookmark = function (recipe){
 }
 
 export const removeBookmark = function(id){
+  //1) getting the recipe index from the bookmarks array to remove it
 const index = state.bookmarks.findIndex(recipe => recipe.id = id)
-
+// 1) remove and set the recipe.bookmark back to false 
 state.bookmarks.splice(index,1)
+if(id === state.recipe.id) state.recipe.bookmark = false
 }

@@ -21,8 +21,7 @@ _errorMessage = 'something went wrong with getting your recipe';
     
     //small allgorithm to updata a part of the dom and not rerender the whole thing
     update(data){
-      if (!data || (Array.isArray(data) && data.length === 0) ) return  this.renderError() //this function will work cuz its in the same line **********
-      // 1) setting data with the new updated version
+     // 1) setting data with the new updated version
       this._data = data
       // 2) creating the new markup
       const newMarkup = this._rednerMarkup(data)  

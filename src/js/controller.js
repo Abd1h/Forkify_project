@@ -20,7 +20,8 @@ const controlRecipes = async function () {
     //getting id from url
     const id = window.location.hash.slice(1)
     if(!id) return //so it dont keep loading when we dont have any hash
-
+//updata result view with marking the selected recipe
+resultView.update(model.getResultForPage(1)) 
 //loading recipe with that id
 recipeView.renderSpiner() // showing a spiner before fetching the data
 await model.loadRecipe(id) // ALLLLLL async funciton will return a promise SOOOO await for it ********* ******* **********

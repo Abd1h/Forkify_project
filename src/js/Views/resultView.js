@@ -15,9 +15,11 @@ return markup
 
 // - generate markup in a separate function for aesthetics lol
 _genMarkupResult(result){
+const urlID = window.location.hash.slice(1)
+
 
 return `<li class="preview">
-<a class="preview__link " href="#${result.id}">
+<a class="preview__link ${urlID ===result.id? 'preview__link--active' :''} " href="#${result.id}">
   <figure class="preview__fig">
     <img src="${result.img}" alt="Test" />
   </figure>

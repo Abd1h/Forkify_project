@@ -71,6 +71,16 @@ const controlServings =function(numOfServings){
 model.updateServings(numOfServings)
 recipeView.update(model.state.recipe)
 }
+
+// - contorl bookmarks
+const controlBookmakrs = function(){console.log(model.state.recipe.bookmark)
+ // adding with the whole recipe data and removing using id only ******** ********** ********
+if (!model.state.recipe.bookmark) model.addBookmark(model.state.recipe)
+
+else model.removeBookmark(model.state.recipe.id)
+recipeView.update(model.state.recipe)
+}
+
   //SIDE NOTES//
 //////////////event listeners belong to the DOM "views model"
 /////////////implmeanting that using "publisher subscriber pattren"
@@ -82,6 +92,7 @@ recipeView.update(model.state.recipe)
 const init = function(){
   recipeView.addHandlerRender(controlRecipes)
   recipeView.addHandlerServings(controlServings)
+  recipeView.addHandlerBookmark(controlBookmakrs)
   searchView.addHandlerSearch(controlSearch)
   paginationView._addHandlerClick(controlPaginate)
   }

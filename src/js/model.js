@@ -9,7 +9,8 @@ export const state = {
       ,resultsPerPage : RESULTS_PER_PAGE
       ,currentPage : 1
 
-    }
+    },
+    bookmarks:[]
 }
 
 //loading and store recipe data from API
@@ -24,12 +25,13 @@ try{
         ingredients : recipeObject.ingredients,
         sourceUrl : recipeObject.source_url,
         title : recipeObject.title,
-
+        id : recipeObject.id,
         publisher: recipeObject.publisher,
         servings : recipeObject.servings
    }
-  //
-  
+  //if the recipe in the bookmarks[] we went to load it bookmarked
+  const checkBookmarkedRecipe = state.bookmarks.some(bookmark => bookmark.id === id)
+ if(checkBookmarkedRecipe) state.recipe.bookmark = true
 
 }catch(err){
    throw err}}
@@ -74,4 +76,20 @@ export const updateServings = function (newServings){
   // updating the servings in the state object
 state.recipe.servings = newServings
 
+}
+
+
+// - adding bookmark 
+export const addBookmark = function (recipe){
+
+  //1) Pushing new booked recipe
+    state.bookmarks.push(recipe)
+  //2) bookmark the current recipe
+  if(recipe.id === state.recipe.id) state.recipe.bookmark = true
+}
+
+export const removeBookmark = function(id){
+const index = state.bookmarks.findIndex(recipe => recipe.id = id)
+
+state.bookmarks.splice(index,1)
 }

@@ -58,7 +58,7 @@ arttributesOfNewEl.forEach(arrt =>{
 
 
 
-    renderSpiner = function (){
+renderSpiner = function (){
     const markup =`
       <div class="spinner">
               <svg>
@@ -70,7 +70,7 @@ arttributesOfNewEl.forEach(arrt =>{
      this._parentEl.insertAdjacentHTML('afterbegin',markup)
     }
     
-    renderError (errorMessage = this._errorMessage){
+renderError (errorMessage = this._errorMessage){
     
       const markup = `<div class="error">
       <div>

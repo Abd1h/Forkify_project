@@ -7,7 +7,7 @@ import recipeView from './Views/recipeView.js';
 import searchView from './Views/searchView.js'
 import resultView from './Views/resultView.js'
 import paginationView from "./Views/paginationView.js";
-
+import bookmarksView from "./Views/bookmarksView.js";
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -76,9 +76,11 @@ recipeView.update(model.state.recipe)
 const controlBookmakrs = function(){console.log(model.state.recipe.bookmark)
  // adding with the whole recipe data and removing using id only ******** ********** ********
 if (!model.state.recipe.bookmark) model.addBookmark(model.state.recipe)
-
 else model.removeBookmark(model.state.recipe.id)
 recipeView.update(model.state.recipe)
+console.log(model.state.recipe.bookmarks)
+bookmarksView.render(model.state.recipe.bookmarks)
+
 }
 
   //SIDE NOTES//

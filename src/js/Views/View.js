@@ -21,6 +21,7 @@ _errorMessage = 'something went wrong with getting your recipe';
     
     //small allgorithm to updata a part of the dom and not rerender the whole thing
     update(data){
+    
      // 1) setting data with the new updated version
       this._data = data
       // 2) creating the new markup

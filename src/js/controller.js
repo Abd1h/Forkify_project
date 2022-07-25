@@ -20,14 +20,19 @@ const controlRecipes = async function () {
     //getting id from url
     const id = window.location.hash.slice(1)
     if(!id) return //so it dont keep loading when we dont have any hash
-//updata result view with marking the selected recipe
+    
+// +) update result view with marking the selected recipe
 resultView.update(model.getResultForPage(1)) 
-//loading recipe with that id
+// +) update bookmarks list with selected recipe
+bookmarksView.update(model.state.bookmarks)
+
+//1) loading recipe with that id
 recipeView.renderSpiner() // showing a spiner before fetching the data
 await model.loadRecipe(id) // ALLLLLL async funciton will return a promise SOOOO await for it ********* ******* **********
 
-//render the recipe to the DOM
+//2) render the recipe to the DOM
 recipeView.render(model.state.recipe)
+
 
 }catch (err) {
  
@@ -73,13 +78,16 @@ recipeView.update(model.state.recipe)
 }
 
 // - contorl bookmarks
-const controlBookmakrs = function(){console.log(model.state.recipe.bookmark)
+const controlBookmakrs = function(){
  // adding with the whole recipe data and removing using id only ******** ********** ********
+ //1) adding or removing bookmarks
 if (!model.state.recipe.bookmark) model.addBookmark(model.state.recipe)
 else model.removeBookmark(model.state.recipe.id)
+
+// 2) update the changes to the UI "bookmark logo fill"
 recipeView.update(model.state.recipe)
-console.log(model.state.recipe.bookmarks)
-bookmarksView.render(model.state.recipe.bookmarks)
+// 3) render booked recipe to the bookmark list
+bookmarksView.render(model.state.bookmarks)
 
 }
 

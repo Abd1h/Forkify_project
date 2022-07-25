@@ -24,6 +24,7 @@ const controlRecipes = async function () {
 // +) update result view with marking the selected recipe
 resultView.update(model.getResultForPage(1)) 
 // +) update bookmarks list with selected recipe
+debugger
 bookmarksView.update(model.state.bookmarks)
 
 //1) loading recipe with that id
@@ -35,7 +36,7 @@ recipeView.render(model.state.recipe)
 
 
 }catch (err) {
- 
+ console.error(err)
     recipeView.renderError()
   }
 }

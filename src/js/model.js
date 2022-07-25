@@ -86,6 +86,9 @@ export const addBookmark = function (recipe){
     state.bookmarks.push(recipe)
   //2) bookmark the current recipe
   if(recipe.id === state.recipe.id) state.recipe.bookmark = true
+
+  //3) store bookmark
+  storage()
 }
 
 export const removeBookmark = function(id){
@@ -94,4 +97,20 @@ const index = state.bookmarks.findIndex(recipe => recipe.id = id)
 // 1) remove and set the recipe.bookmark back to false 
 state.bookmarks.splice(index,1)
 if(id === state.recipe.id) state.recipe.bookmark = false
+
+ //3) store bookmark
+ storage()
 }
+
+//storing data
+const storage = function(){
+  window.localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks))
+}
+
+// getting data out of localStorage
+const getStorageBookmarks = function(){
+  const data = window.localStorage.getItem('bookmarks')
+  if (!data) return
+  state.bookmarks = JSON.parse(data)
+}
+getStorageBookmarks()

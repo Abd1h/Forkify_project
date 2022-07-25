@@ -12,7 +12,5 @@ _rednerMarkup(bookmarks){
  return markup
 }
 
-
-
 }
 export default new BookmarkView()

@@ -114,3 +114,7 @@ const getStorageBookmarks = function(){
   state.bookmarks = JSON.parse(data)
 }
 getStorageBookmarks()
+
+const init = function(){
+  
+}

@@ -34,8 +34,9 @@ _errorMessage = 'something went wrong with getting your recipe';
      //NNNOTESSS: 
      // curEL = the current HTML content in the dom , newEl = same HTML content with new updates or changes like "people serving number"
      // converting nodelist to array so we could loop over them and comper the curEl with newEl using *********el.isEqualNode(seond el)********
-     // 
-     
+     // \
+     console.log(curElement)
+     console.log(newElement )
       newElement.forEach((newEl, i) => {
         const curEl = curElement[i]
  // goal: change sigle parts of the current element only if its different from the New element

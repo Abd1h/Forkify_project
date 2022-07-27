@@ -24,7 +24,6 @@ const controlRecipes = async function () {
 // +) update result view with marking the selected recipe
 resultView.update(model.getResultForPage(1)) 
 // +) update bookmarks list with selected recipe
-debugger
 bookmarksView.update(model.state.bookmarks)
 
 //1) loading recipe with that id
@@ -106,6 +105,11 @@ const init = function(){
   recipeView.addHandlerBookmark(controlBookmakrs)
   searchView.addHandlerSearch(controlSearch)
   paginationView._addHandlerClick(controlPaginate)
+//--------------------------------------------------------
+  // this is to render bookmakr list to the dom, so when we update in line 27
+  // if we dont, update function will try to insert new dom element and cuase error
+  bookmarksView.render(model.state.bookmarks) 
+//--------------------------------------------------------
   }
   init()
 

@@ -1,44 +1,36 @@
 //index.html in dist folder has no acces to your src img folder so we need to import that to show our icons
 // import icons from '../img/icons.svg' //parcel 1 way but in parcel 2 we need one more step for img and voice kinda folders
-import icons from 'url:../../img/icons.svg'
+import icons from 'url:../../img/icons.svg';
 // import {Fraction} from 'fractional'
-import { View } from './View.js'
-
+import { View } from './View.js';
 
 class RecipeView extends View {
-_parentEl = document.querySelector('.recipe')
-_errorMessage = 'haveing trouble loading your recipe! , please try again'
+  _parentEl = document.querySelector('.recipe');
+  _errorMessage = 'haveing trouble loading your recipe! , please try again';
 
-addHandlerRender(handler){
-  ['hashchange','load'].forEach(ev=>window.addEventListener(ev,handler) )
-}
+  addHandlerRender(handler) {
+    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+  }
 
-addHandlerServings(handler){
-this._parentEl.addEventListener('click',function(e){
+  addHandlerServings(handler) {
+    this._parentEl.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--update-servings');
+      if (!btn) return;
+      const servingsNum = +btn.dataset.value;
 
-const btn = e.target.closest('.btn--update-servings')
-if(!btn) return
-const servingsNum = +btn.dataset.value
+      if (servingsNum > 0) handler(servingsNum); //cant have servings in negative
+    });
+  }
 
-if(servingsNum > 0) handler(servingsNum) //cant have servings in negative
+  addHandlerBookmark(handler) {
+    this._parentEl.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--bookmark');
+      if (!btn) return;
+      handler();
+    });
+  }
 
-})
-
-}
-
-addHandlerBookmark(handler){
-this._parentEl.addEventListener('click',function(e){
-  const btn = e.target.closest('.btn--bookmark')
-if (!btn) return
-handler()
-
-
-})
-}
-
-
-_rednerMarkup= function(recipeObj){
-
+  _rednerMarkup = function (recipeObj) {
     const markup = ` 
     <figure class="recipe__fig">
     <img src="${recipeObj.img}" alt="${recipeObj.title}" class="recipe__img" />
@@ -52,23 +44,31 @@ _rednerMarkup= function(recipeObj){
       <svg class="recipe__info-icon">
         <use href="${icons}#icon-clock"></use>
       </svg>
-      <span class="recipe__info-data recipe__info-data--minutes">${recipeObj.cookingTime}</span>
+      <span class="recipe__info-data recipe__info-data--minutes">${
+        recipeObj.cookingTime
+      }</span>
       <span class="recipe__info-text">minutes</span>
     </div>
     <div class="recipe__info">
       <svg class="recipe__info-icon">
         <use href="${icons}#icon-users"></use>
       </svg>
-      <span class="recipe__info-data recipe__info-data--people">${recipeObj.servings}</span>
+      <span class="recipe__info-data recipe__info-data--people">${
+        recipeObj.servings
+      }</span>
       <span class="recipe__info-text">servings</span>
     
       <div class="recipe__info-buttons">
-        <button class="btn--tiny  btn--update-servings" data-value="${recipeObj.servings - 1}">
+        <button class="btn--tiny  btn--update-servings" data-value="${
+          recipeObj.servings - 1
+        }">
           <svg>
             <use href="${icons}#icon-minus-circle"></use>
           </svg>
         </button>
-        <button class="btn--tiny btn--update-servings" data-value="${recipeObj.servings + 1}">
+        <button class="btn--tiny btn--update-servings" data-value="${
+          recipeObj.servings + 1
+        }">
           <svg>
             <use href="${icons}#icon-plus-circle"></use>
           </svg>
@@ -81,7 +81,9 @@ _rednerMarkup= function(recipeObj){
     </div>
     <button class="btn--round btn--bookmark">
       <svg class="">
-        <use href="${icons}#icon-bookmark${recipeObj.bookmark?'-fill':''}"></use>
+        <use href="${icons}#icon-bookmark${
+      recipeObj.bookmark ? '-fill' : ''
+    }"></use>
       </svg>
     </button>
     </div>
@@ -91,7 +93,9 @@ _rednerMarkup= function(recipeObj){
     <ul class="recipe__ingredient-list">
     
     <!-- NEW ---------------------- -->
-    ${recipeObj.ingredients.map(ing=>this._genMarkUpIngeridents(ing)).join('')}
+    ${recipeObj.ingredients
+      .map(ing => this._genMarkUpIngeridents(ing))
+      .join('')}
     <!-- NEW ----------------------  -->
     
     </ul>
@@ -101,7 +105,9 @@ _rednerMarkup= function(recipeObj){
     <h2 class="heading--2">How to cook it</h2>
     <p class="recipe__directions-text">
       This recipe was carefully designed and tested by
-      <span class="recipe__publisher">${recipeObj.publisher}</span>. Please check out
+      <span class="recipe__publisher">${
+        recipeObj.publisher
+      }</span>. Please check out
       directions at their website.
     </p>
     <a
@@ -114,27 +120,23 @@ _rednerMarkup= function(recipeObj){
         <use href="${icons}#icon-arrow-right"></use>
       </svg>
     </a>
-    </div> `
-    
-    return markup
-}
- 
+    </div> `;
 
+    return markup;
+  };
 
-_genMarkUpIngeridents(ing){
-  //using fraction to convert number from 0.5 --> 1/2
-    return` <li class="recipe__ingredient">
+  _genMarkUpIngeridents(ing) {
+    //using fraction to convert number from 0.5 --> 1/2
+    return ` <li class="recipe__ingredient">
        <svg class="recipe__icon">
          <use href="${icons}#icon-check"></use>
        </svg>
-       <div class="recipe__quantity">${ing.quantity? ing.quantity:''}</div> 
+       <div class="recipe__quantity">${ing.quantity ? ing.quantity : ''}</div> 
        <div class="recipe__description">
          <span class="recipe__unit">${ing.unit}</span>
        ${ing.description}
        </div>
-     </li>`
-   
-   
+     </li>`;
+  }
 }
-}
-export default new RecipeView() //creating the object here then export--> if you export the class then create the object there, it will create a copy every time you use its methods or whatever 
+export default new RecipeView(); //creating the object here then export--> if you export the class then create the object there, it will create a copy every time you use its methods or whatever

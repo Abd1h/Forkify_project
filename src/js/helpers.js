@@ -24,3 +24,32 @@ export const getJSON = async function (url) {
     throw err; // doing this to handel the err in the controller
   }
 };
+
+export const sendJSON = async function (url, uploadData) {
+  try {
+    //sending recipe
+    const respons = await Promise.race([
+      fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        catch: 'no-catch',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(uploadData),
+      }),
+      timeout(TIME_OUT),
+    ]); //real life use of race
+
+    // forkfy API will return the data that we send
+    // so await for it
+    const data = await respons.json();
+
+    if (!respons.ok) throw new Error(`this the error`);
+
+    return data.data;
+  } catch (err) {
+    console.log(err);
+    throw err; // doing this to handel the err in the controller
+  }
+};

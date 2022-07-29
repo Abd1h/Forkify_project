@@ -1,5 +1,5 @@
-import { getJSON } from './helpers';
-import { API_URL, RESULTS_PER_PAGE } from './config';
+import { getJSON, sendJSON } from './helpers';
+import { API_URL, RESULTS_PER_PAGE, API_KEY } from './config';
 
 export const state = {
   recipe: {},
@@ -11,23 +11,26 @@ export const state = {
   },
   bookmarks: [],
 };
+// convert API object to js rules source_url --> sourceUrl
+const createRecipeObject = function (recipeObject) {
+  return {
+    cookingTime: recipeObject.cooking_time,
+    img: recipeObject.image_url,
+    ingredients: recipeObject.ingredients,
+    sourceUrl: recipeObject.source_url,
+    title: recipeObject.title,
+    id: recipeObject.id,
+    publisher: recipeObject.publisher,
+    servings: recipeObject.servings,
+  };
+};
 
 //loading and store recipe data from API
 export const loadRecipe = async function (id) {
   try {
     const { recipe: recipeObject } = await getJSON(`${API_URL}/${id}`); //using helpers function
+    state.recipe = createRecipeObject(recipeObject);
 
-    //making new object with js rules source_url --> sourceUrl
-    state.recipe = {
-      cookingTime: recipeObject.cooking_time,
-      img: recipeObject.image_url,
-      ingredients: recipeObject.ingredients,
-      sourceUrl: recipeObject.source_url,
-      title: recipeObject.title,
-      id: recipeObject.id,
-      publisher: recipeObject.publisher,
-      servings: recipeObject.servings,
-    };
     //if the recipe in the bookmarks[] we went to load it bookmarked
     const checkBookmarkedRecipe = state.bookmarks.some(
       bookmark => bookmark.id === id
@@ -121,11 +124,38 @@ const clearStorage = function () {
 // clearStorage();
 
 // uploading new recipe functionality
-export const uploadNewRecipe = function (newRecipe) {
+export const uploadNewRecipe = async function (newRecipe) {
   // 1) convert to array - loop over it - return new one with wanted info
   let ingredients = Object.entries(newRecipe).filter(
     entry => entry[0].startsWith('ingredient') && entry[1] !== ''
   );
+  //now it looks like this --> ['ingredient-1', '0.5,kg,Rice']
+  // 2) working on index[1] to return object with those values
+  ingredients = ingredients
+    .map(ing => ing[1].replaceAll(' ', '').split(','))
+    .map(ing => {
+      return {
+        quantity: ing[0] ? +ing[0] : null,
+        unit: ing[1] ? ing[1] : '',
+        description: ing[2],
+      };
+    });
 
-  console.log(ingredients);
+  // finial object that will be send to the API
+  const sendRecipe = {
+    cooking_time: +newRecipe.cookingTime,
+    image_url: newRecipe.image,
+    ingredients,
+    publisher: newRecipe.publisher,
+    servings: +newRecipe.servings,
+    source_url: newRecipe.sourceUrl,
+    title: newRecipe.title,
+  };
+
+  // 3) sending data to the API and get the recipe back
+  const { recipe } = await sendJSON(`${API_URL}?key=${API_KEY}`, sendRecipe);
+
+  state.recipe = createRecipeObject(recipe);
+  addBookmark(state.recipe);
+  console.log(state.recipe);
 };

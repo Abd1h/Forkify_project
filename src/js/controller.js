@@ -1,6 +1,7 @@
 //routen stuff
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { SEC_CLOSE_FORM } from './config.js';
 //------------------------------------------
 import * as model from './model.js';
 import recipeView from './Views/recipeView.js';
@@ -81,8 +82,26 @@ const controlBookmakrs = function () {
 };
 
 //- control uploading new recipe
-const controlUploadNewRecipe = function (newRecipe) {
-  model.uploadNewRecipe(newRecipe);
+const controlUploadNewRecipe = async function (newRecipe) {
+  try {
+    addRecipeView.renderSpiner();
+    // 1) sending data to be filtered in the model push to the state
+    await model.uploadNewRecipe(newRecipe);
+    //+ rerender bookmarks list after adding the newRecipe to bookmarks
+    bookmarksView.render(model.state.bookmarks);
+
+    //2) rendering recipe
+    recipeView.render(model.state.recipe);
+
+    //3) render success message then close form after 1sec
+    addRecipeView.renderMessage();
+    setTimeout(function () {
+      addRecipeView.toggleForm();
+    }, SEC_CLOSE_FORM * 1000);
+  } catch (err) {
+    console.log(err);
+    addRecipeView.renderError();
+  }
 };
 
 //SIDE NOTES//

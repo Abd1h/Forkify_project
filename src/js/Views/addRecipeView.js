@@ -9,6 +9,9 @@ class addRecipeView extends View {
   _recipeWindow = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');
   _btnCloseForm = document.querySelector('.btn--close-modal');
+
+  _errorMessage = `couldn't upload your recipe :( pls try again`;
+  _message = 'you recipe was loaded successfully ;)';
   constructor() {
     super();
     this._addHandlerAddRecipe();
@@ -17,10 +20,10 @@ class addRecipeView extends View {
   // - handler to open and close form
   _addHandlerAddRecipe() {
     // to open form :
-    this._btnAddRecipe.addEventListener('click', this._toggleForm.bind(this));
+    this._btnAddRecipe.addEventListener('click', this.toggleForm.bind(this));
     // to close form
     [this._btnCloseForm, this._overlay].forEach(ev =>
-      ev.addEventListener('click', this._toggleForm.bind(this))
+      ev.addEventListener('click', this.toggleForm.bind(this))
     );
   }
   // - handler to load form
@@ -36,7 +39,7 @@ class addRecipeView extends View {
   }
 
   //outside function for toggling form window, to call it with bind method so it doesnt take event this.keyword ****
-  _toggleForm() {
+  toggleForm() {
     this._recipeWindow.classList.toggle('hidden');
     this._overlay.classList.toggle('hidden');
   }

@@ -13,6 +13,8 @@ class RecipeView extends View {
   }
 
   addHandlerServings(handler) {
+
+    
     this._parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
@@ -25,6 +27,8 @@ class RecipeView extends View {
   addHandlerBookmark(handler) {
     this._parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--bookmark');
+
+
       if (!btn) return;
       handler();
     });
@@ -129,6 +133,8 @@ class RecipeView extends View {
     //using fraction to convert number from 0.5 --> 1/2
     return ` <li class="recipe__ingredient">
        <svg class="recipe__icon">
+
+       
          <use href="${icons}#icon-check"></use>
        </svg>
        <div class="recipe__quantity">${ing.quantity ? ing.quantity : ''}</div> 

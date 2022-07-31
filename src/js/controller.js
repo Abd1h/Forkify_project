@@ -1,7 +1,7 @@
 //routen stuff
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { SEC_CLOSE_FORM } from './config.js';
+import { SEC_CLOSE_FORM, SEC_RE_GENERATE_FORM } from './config.js';
 //------------------------------------------
 import * as model from './model.js';
 import recipeView from './Views/recipeView.js';
@@ -97,6 +97,10 @@ const controlUploadNewRecipe = async function (newRecipe) {
     addRecipeView.renderMessage();
     setTimeout(function () {
       addRecipeView.toggleForm();
+      //reGenerate form HTML after being cleard with rednerMessage() -- clear()
+      setTimeout(() => {
+        addRecipeView.reGenerateMarkup();
+      }, SEC_RE_GENERATE_FORM * 1000);
     }, SEC_CLOSE_FORM * 1000);
   } catch (err) {
     console.log(err);

@@ -80,7 +80,6 @@ export class View {
       </div>
       <p>${message}</p>
     </div>`;
-
     this._clear();
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }

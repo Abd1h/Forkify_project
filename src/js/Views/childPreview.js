@@ -1,4 +1,5 @@
 import { View } from './View.js'; //main class
+import icons from 'url:../../img/icons.svg';
 
 class childPreview extends View {
   //child class of resultView & bookmarkView
@@ -18,6 +19,11 @@ class childPreview extends View {
     <h4 class="preview__title">${bookmark.title}</h4>
     <p class="preview__publisher">${bookmark.publisher}</p>
   
+    <div class="recipe__user-generated ${bookmark.key ? '' : 'hidden'}">
+            <svg>
+              <use href="${icons}#icon-user"></use>
+            </svg>
+    </div>
   </div>
 </a>
 </li>

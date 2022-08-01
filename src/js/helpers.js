@@ -15,12 +15,11 @@ export const getJSON = async function (url) {
     const respons = await Promise.race([fetch(url), timeout(TIME_OUT)]); //real life use of race
 
     const data = await respons.json();
-
-    if (!respons.ok) throw new Error(`error`);
+    console.log(data);
+    if (!respons.ok) throw new Error(`${data.message} --- (${data.status})`);
 
     return data.data;
   } catch (err) {
-    console.log(err);
     throw err; // doing this to handel the err in the controller
   }
 };
@@ -45,11 +44,10 @@ export const sendJSON = async function (url, uploadData) {
     // so await for it
     const data = await respons.json();
 
-    if (!respons.ok) throw new Error(`this the error`);
+    if (!respons.ok) throw new Error(`${data.message} --- (${data.status})`);
 
     return data.data;
   } catch (err) {
-    console.log(err);
     throw err; // doing this to handel the err in the controller
   }
 };

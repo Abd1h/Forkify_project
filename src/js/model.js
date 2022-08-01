@@ -22,6 +22,7 @@ const createRecipeObject = function (recipeObject) {
     id: recipeObject.id,
     publisher: recipeObject.publisher,
     servings: recipeObject.servings,
+    ...(recipeObject.key && { key: recipeObject.key }), // adding new key besed on a condition
   };
 };
 
@@ -31,12 +32,11 @@ export const loadRecipe = async function (id) {
     const { recipe: recipeObject } = await getJSON(`${API_URL}/${id}`); //using helpers function
     state.recipe = createRecipeObject(recipeObject);
 
-    //if the recipe in the bookmarks[] we went to load it bookmarked
+    //if the recipe in the bookmarks[] we went to load it bookmarked "with bookmark logo"
     const checkBookmarkedRecipe = state.bookmarks.some(
       bookmark => bookmark.id === id
     );
     if (checkBookmarkedRecipe) state.recipe.bookmark = true;
-    console.log(state.recipe);
   } catch (err) {
     throw err;
   }
@@ -46,7 +46,9 @@ export const loadSearchResult = async function (query) {
   try {
     state.search.query = query;
     // 1) fetching using helper funciton
-    const searchResult = await getJSON(`${API_URL}?search=${query}`);
+    const searchResult = await getJSON(
+      `${API_URL}?search=${query}&key=${API_KEY}` //adding ?key=${API_KEY} so it loads all results including our added recipes
+    );
     // 2) creating new object for our state from the fetched array
     state.search.results = searchResult.recipes.map(recipe => {
       return {
@@ -54,6 +56,7 @@ export const loadSearchResult = async function (query) {
         title: recipe.title,
         id: recipe.id,
         publisher: recipe.publisher,
+        ...(recipe.key && { key: recipe.key }),
       };
     });
   } catch (err) {
@@ -89,7 +92,7 @@ export const addBookmark = function (recipe) {
   //2) bookmark the current recipe
   if (recipe.id === state.recipe.id) state.recipe.bookmark = true;
 
-  //3) store bookmark
+  //3) store bookmarks new state
   storage();
 };
 
@@ -100,11 +103,11 @@ export const removeBookmark = function (id) {
   state.bookmarks.splice(index, 1);
   if (id === state.recipe.id) state.recipe.bookmark = false;
 
-  //3) store bookmark
+  //3) store bookmarks new state
   storage();
 };
 
-//storing data
+//storing data "bookmarks"
 const storage = function () {
   window.localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
 };
@@ -154,8 +157,7 @@ export const uploadNewRecipe = async function (newRecipe) {
 
   // 3) sending data to the API and get the recipe back
   const { recipe } = await sendJSON(`${API_URL}?key=${API_KEY}`, sendRecipe);
-
   state.recipe = createRecipeObject(recipe);
+  // 4) bookmarked our new uploaded recipe
   addBookmark(state.recipe);
-  console.log(state.recipe);
 };

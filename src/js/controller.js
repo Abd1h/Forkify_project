@@ -33,10 +33,10 @@ const controlRecipes = async function () {
     //2) render the recipe to the DOM
     recipeView.render(model.state.recipe);
   } catch (err) {
-    console.error(err);
-    recipeView.renderError();
+    recipeView.renderError(err);
   }
 };
+
 //// - control the search functionality
 const controlSearch = async function () {
   try {
@@ -52,7 +52,7 @@ const controlSearch = async function () {
     resultView.render(model.getResultForPage(1)); // passing 1 so it always starts with page 1 even if the prev recpie was on page 5..
     paginationView.render(model.state.search); // rendering paginate
   } catch (err) {
-    console.log(err);
+    resultView.renderError();
   }
 };
 
@@ -95,13 +95,17 @@ const controlUploadNewRecipe = async function (newRecipe) {
 
     //3) render success message then close form after 1sec
     addRecipeView.renderMessage();
+    //4) changing the url with the newrecipe hash
+    window.history.pushState(null, '', `#${model.state.recipe.id}`); //********** **********/
+
+    //5) close from after rendering success message
     setTimeout(function () {
-      addRecipeView.toggleForm();
-      //reGenerate form HTML after being cleard with rednerMessage() -- clear()
-      setTimeout(() => {
-        addRecipeView.reGenerateMarkup();
-      }, SEC_RE_GENERATE_FORM * 1000);
+      addRecipeView.closeForm();
     }, SEC_CLOSE_FORM * 1000);
+    // +reGenerate form HTML after being cleard with rednerMessage() -- clear()
+    setTimeout(() => {
+      addRecipeView.reGenerateMarkup();
+    }, SEC_RE_GENERATE_FORM * 1000);
   } catch (err) {
     console.log(err);
     addRecipeView.renderError();
@@ -123,8 +127,7 @@ const init = function () {
   searchView.addHandlerSearch(controlSearch);
   paginationView.addHandlerClick(controlPaginate);
   //--------------------------------------------------------
-  // this is to render bookmakr list to the dom, so when we update in line 27
-  // if we dont, update function will try to insert new dom element and cuase error
+  //rendering stored bookmarks
   bookmarksView.render(model.state.bookmarks);
   //--------------------------------------------------------
   addRecipeView.addHandlerLoadRecipe(controlUploadNewRecipe);

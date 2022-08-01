@@ -13,8 +13,6 @@ class RecipeView extends View {
   }
 
   addHandlerServings(handler) {
-
-    
     this._parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
@@ -27,7 +25,6 @@ class RecipeView extends View {
   addHandlerBookmark(handler) {
     this._parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--bookmark');
-
 
       if (!btn) return;
       handler();
@@ -80,9 +77,11 @@ class RecipeView extends View {
       </div>
     </div>
     
-    <div class="recipe__user-generated">
-      
-    </div>
+     <div class="recipe__user-generated ${recipeObj.key ? '' : 'hidden'}">
+            <svg>
+              <use href="${icons}#icon-user"></use>
+            </svg>
+          </div>
     <button class="btn--round btn--bookmark">
       <svg class="">
         <use href="${icons}#icon-bookmark${

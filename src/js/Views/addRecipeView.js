@@ -1,5 +1,4 @@
 import { View } from './View.js'; //main class
-import childPreview from './childPreview.js'; //child class
 import icons from 'url:../../img/icons.svg';
 class addRecipeView extends View {
   _parentEl = document.querySelector('.upload');
@@ -20,10 +19,10 @@ class addRecipeView extends View {
   // - handler to open and close form
   _addHandlerAddRecipe() {
     // to open form :
-    this._btnAddRecipe.addEventListener('click', this.toggleForm.bind(this));
+    this._btnAddRecipe.addEventListener('click', this.openForm.bind(this));
     // to close form
     [this._btnCloseForm, this._overlay].forEach(ev =>
-      ev.addEventListener('click', this.toggleForm.bind(this))
+      ev.addEventListener('click', this.closeForm.bind(this))
     );
   }
   // - handler to load form
@@ -38,10 +37,14 @@ class addRecipeView extends View {
     });
   }
 
-  //outside function for toggling form window, to call it with bind method so it doesnt take event this.keyword ****
-  toggleForm() {
-    this._recipeWindow.classList.toggle('hidden');
-    this._overlay.classList.toggle('hidden');
+  //outside functions for toggling form window, to call it with bind method so it doesnt take event this.keyword ****
+  openForm() {
+    this._recipeWindow.classList.remove('hidden');
+    this._overlay.classList.remove('hidden');
+  }
+  closeForm() {
+    this._recipeWindow.classList.add('hidden');
+    this._overlay.classList.add('hidden');
   }
 
   // after submit the NewRecipe renderSpinder - renderMessage will clear the container so we need to reGenerate our from mark up

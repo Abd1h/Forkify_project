@@ -11,7 +11,7 @@ import paginationView from './Views/paginationView.js';
 import bookmarksView from './Views/bookmarksView.js';
 import addRecipeView from './Views/addRecipeView.js';
 // https://forkify-api.herokuapp.com/v2
-
+console.log('netlify');
 ////////////////////////////////////////////////////////
 
 //// - control rendering recipes functionality

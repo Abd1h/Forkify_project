@@ -7,7 +7,7 @@ export class View {
   render(data) {
     //checking if data is null OR its an array and its empty --> 'no data'
     if (!data || (Array.isArray(data) && data.length === 0))
-      return this.renderError(); //this function will work cuz its in the same line **********
+      return this.renderError();
 
     // 1) setting data
     this._data = data;
@@ -45,7 +45,7 @@ export class View {
         !curEl.isEqualNode(newEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
       )
-        //using trim cuz spaces fuck thing up
+        //using trim cuz spaces fuck things up
         curEl.textContent = newEl.textContent;
       //1) changing attributes so data-value reset to the new value
 

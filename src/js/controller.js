@@ -11,7 +11,7 @@ import paginationView from './Views/paginationView.js';
 import bookmarksView from './Views/bookmarksView.js';
 import addRecipeView from './Views/addRecipeView.js';
 // https://forkify-api.herokuapp.com/v2
-console.log('netlify');
+
 ////////////////////////////////////////////////////////
 
 //// - control rendering recipes functionality
@@ -40,7 +40,7 @@ const controlRecipes = async function () {
 //// - control the search functionality
 const controlSearch = async function () {
   try {
-    // 1) geting the query
+    // 1) getting the query
     const query = searchView.getQuery();
     if (!query) return;
     // 2) loading search result
